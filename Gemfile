@@ -9,6 +9,7 @@ gem 'importmap-rails', '1.1.5'
 gem 'jbuilder',        '2.11.5'
 gem 'puma',            '5.6.8'
 gem 'rails',           '7.0.4.3'
+gem "bcrypt",          "3.1.18"
 gem 'sassc-rails',     '2.1.2'
 gem 'sprockets-rails', '3.4.2'
 gem 'sqlite3',         '1.6.1'
