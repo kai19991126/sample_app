@@ -44,6 +44,20 @@ class ValidLoginTest < ValidLogin
     assert_select 'a[href=?]', logout_path
     assert_select 'a[href=?]', user_path(@user)
   end
+
+  test "login with remembering" do
+    log_in_as(@user, remember_me: '1')
+    assert_equal cookies[:remember_token], assigns(:user).remember_token
+  end
+
+  test "login without remembering" do
+    # cookieを保存してログイン
+    log_in_as(@user, remember_me: '1')
+    delete logout_path
+    # cookieを削除してログイン
+    log_in_as(@user, remember_me: '0')
+    assert_empty cookies[:remember_token]
+  end
 end
 
 class Logout < ValidLogin
@@ -65,5 +79,10 @@ class LogoutTest < Logout
     assert_select 'a[href=?]', login_path
     assert_select 'a[href=?]', logout_path,      count: 0
     assert_select 'a[href=?]', user_path(@user), count: 0
+  end
+
+  test 'should still work after logout in second window' do
+    delete logout_path
+    assert_redirected_to root_url
   end
 end
